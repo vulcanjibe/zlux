@@ -135,6 +135,7 @@ RUN mkdir -m 700 /root/.ssh \
 COPY .ssh/id_rsa /root/.ssh
 COPY .ssh/id_rsa.pub /root/.ssh
 
+RUN chmod 400 /root/.ssh/id_rsa
 
 RUN cd /home/zowe \
     && git clone --recursive --quiet git@github.com:zowe/zlux.git \
