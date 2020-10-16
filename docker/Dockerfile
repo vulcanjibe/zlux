@@ -1,7 +1,7 @@
 FROM debian:jessie
 
-ARG SSH_KEY
-ENV SSH_KEY=${SSH_KEY}
+ARG SSH_KEY_PUBLIC
+ARG SSH_KEY_PRIVATE
 
 USER root
 
@@ -134,11 +134,13 @@ RUN mkdir -m 700 /root/.ssh \
   && touch -m 600 /root/.ssh/known_hosts \
   && ssh-keyscan github.com > /root/.ssh/known_hosts
 
-#COPY .ssh/id_rsa /root/.ssh
-COPY .ssh/id_rsa.pub /root/.ssh
 
 RUN touch -m 600 /root/.ssh/id_rsa \
-	&& echo ${SSH_KEY} > /root/.ssh/id_rsa \
+	&& echo ${SSH_KEY_PUBLIC} > /root/.ssh/id_rsa \
+	&& chmod 400 /root/.ssh/id_rsa 
+
+RUN touch -m 600 /root/.ssh/id_rsa \
+	&& echo ${SSH_KEY_PRIVATE} > /root/.ssh/id_rsa \
 	&& chmod 400 /root/.ssh/id_rsa 
 
 RUN cd /home/zowe \
