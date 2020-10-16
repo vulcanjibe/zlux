@@ -132,7 +132,7 @@ RUN mkdir -m 700 /root/.ssh \
   && touch -m 600 /root/.ssh/known_hosts \
   && ssh-keyscan github.com > /root/.ssh/known_hosts
 
-COPY .ssh/id_rsa /root/.ssh
+#COPY .ssh/id_rsa /root/.ssh
 COPY .ssh/id_rsa.pub /root/.ssh
 
 RUN chmod 400 /root/.ssh/id_rsa
