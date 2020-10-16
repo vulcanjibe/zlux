@@ -129,7 +129,7 @@ RUN apt-get install -y nodejs \
 # Make ssh dir
 
 RUN mkdir -m 700 /root/.ssh \
-  && known_hosts \
+  && touch -m 600 /root/.ssh/known_hosts \
   && ssh-keyscan github.com > /root/.ssh/known_hosts
 
 #COPY .ssh/id_rsa /root/.ssh
