@@ -1,7 +1,7 @@
-FROM debian:jessie
+FROM debian:buster
 
-ARG SSH_KEY_PUBLIC
 ARG SSH_KEY_PRIVATE
+ARG SSH_KEY_PUBLIC
 
 USER root
 
@@ -21,7 +21,7 @@ RUN apt-get update \
     && apt-get install -y wget \
     && cd /tmp \
     && wget --no-check-certificate --header "Cookie: oraclelicense=accept-securebackup-cookie" https://javadl.oracle.com/webapps/download/GetFile/1.8.0_261-b12/a4634525489241b9a9e1aa73d9e118e6/linux-i586/jdk-${JAVA_VERSION}-linux-x64.tar.gz -O jdk-${JAVA_VERSION}-linux-x64.tar.gz \
-	&& mkdir jdk-${JAVA_VERSION}-linux-x64 \
+       && mkdir jdk-${JAVA_VERSION}-linux-x64 \
     && tar -zxvf jdk-${JAVA_VERSION}-linux-x64.tar.gz --directory jdk-${JAVA_VERSION}-linux-x64 --strip-components=1 \
     && mv jdk-${JAVA_VERSION}-linux-x64 ${JAVA_HOME} \
     && rm jdk-${JAVA_VERSION}-linux-x64.tar.gz \
@@ -117,12 +117,16 @@ RUN ant -version
 # Installation nodejs, npm, git, python2
 ###########
 
-RUN apt-get install -y nodejs \
-    && apt-get install -y npm \
-	&& apt-get install -y git \
-	&& apt-get install -y python \
-	&& mkdir /home/zowe \
-	&& cd /home/zowe 
+RUN apt-get update \
+    && apt-get upgrade \
+    && apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates \
+    && curl -sL https://deb.nodesource.com/setup_12.x | bash - \
+    && apt-get install -y nodejs \
+    && apt-get install -y gcc g++ make \
+    && apt-get install -y git \
+    && apt-get install -y python \
+    && mkdir /home/zowe \
+    && cd /home/zowe
 
 #############
 # CLONE du git ZOWE/ZLUX
@@ -131,27 +135,34 @@ RUN apt-get install -y nodejs \
 # Make ssh dir
 
 RUN mkdir -m 700 /root/.ssh \
-  && touch -m 600 /root/.ssh/known_hosts \
-  && ssh-keyscan github.com > /root/.ssh/known_hosts
+    && touch -m 600 /root/.ssh/known_hosts \
+    && ssh-keyscan github.com > /root/.ssh/known_hosts
 
 
 RUN touch -m 600 /root/.ssh/id_rsa \
-	&& echo ${SSH_KEY_PUBLIC} > /root/.ssh/id_rsa \
-	&& chmod 400 /root/.ssh/id_rsa 
+    && echo ${SSH_KEY_PRIVATE} > /root/.ssh/id_rsa \
+    && chmod 400 /root/.ssh/id_rsa
 
-RUN touch -m 600 /root/.ssh/id_rsa \
-	&& echo ${SSH_KEY_PRIVATE} > /root/.ssh/id_rsa \
-	&& chmod 400 /root/.ssh/id_rsa 
+RUN touch -m 600 /root/.ssh/id_rsa.pub \
+    && echo ${SSH_KEY_PUBLIC} > /root/.ssh/id_rsa.pub \
+    && chmod 400 /root/.ssh/id_rsa.pub
+
+#COPY .ssh/id_rsa /root/.ssh
+#COPY .ssh/id_rsa.pub /root/.ssh
+
 
 RUN cd /home/zowe \
     && git clone --recursive --quiet git@github.com:zowe/zlux.git \
     && cd zlux \
-    && git submodule foreach "git checkout master"	\
-	&& cd zlux-build 
-	
-############ 
+    && git submodule foreach "git checkout master"       \
+    && cd zlux-build
+
+############
 # BUILD
 ###########
 
 RUN cd /home/zowe/zlux/zlux-build \
-    && ./build.sh
+    && ./build.sh 
+
+RUN cd home/zowe/zlux/zlux-app-server/bin \
+    && ./app-server.sh
