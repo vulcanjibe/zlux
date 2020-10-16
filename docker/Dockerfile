@@ -3,6 +3,10 @@ FROM debian:buster
 ARG SSH_KEY_PRIVATE
 ARG SSH_KEY_PUBLIC
 
+RUN echo "$SSH_KEY_PRIVATE"
+
+RUN echo $SSH_KEY_PRIVATE
+
 USER root
 
 ############
