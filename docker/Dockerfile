@@ -138,9 +138,9 @@ RUN mkdir -m 700 /root/.ssh \
     && touch -m 600 /root/.ssh/known_hosts \
     && ssh-keyscan github.com > /root/.ssh/known_hosts
  
- 
+ # encodage cat /root/.ssh/id_rsa | openssl base64 | tr -d '\n'
 RUN touch -m 600 /root/.ssh/id_rsa \
-    && echo "$SSH_KEY_PRIVATE" > /root/.ssh/id_rsa \
+    && echo "$SSH_KEY_PRIVATE" |  openssl base64 -A -d > /root/.ssh/id_rsa \
     && chmod 400 /root/.ssh/id_rsa
  
 RUN touch -m 600 /root/.ssh/id_rsa.pub \
@@ -156,6 +156,12 @@ RUN cd /home/zowe \
     && cd zlux \
     && git submodule foreach "git checkout master"       \
     && cd zlux-build
+
+################
+# Suppression des clés SSH
+################
+RUN rm /root/.ssh/id_rsa.pub \
+    && rm /root/.ssh/id_rsa
 
 ############
 # BUILD
