@@ -137,12 +137,12 @@ RUN apt-get update \
 RUN mkdir -m 700 /root/.ssh \
     && touch -m 600 /root/.ssh/known_hosts \
     && ssh-keyscan github.com > /root/.ssh/known_hosts
-
-
+ 
+ 
 RUN touch -m 600 /root/.ssh/id_rsa \
-    && echo ${SSH_KEY_PRIVATE} > /root/.ssh/id_rsa \
+    && echo "$SSH_KEY_PRIVATE" > /root/.ssh/id_rsa \
     && chmod 400 /root/.ssh/id_rsa
-
+ 
 RUN touch -m 600 /root/.ssh/id_rsa.pub \
     && echo ${SSH_KEY_PUBLIC} > /root/.ssh/id_rsa.pub \
     && chmod 400 /root/.ssh/id_rsa.pub
