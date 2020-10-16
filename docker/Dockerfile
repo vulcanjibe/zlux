@@ -1,5 +1,7 @@
 FROM debian:jessie
 
+ARG SSH_KEY
+ENV SSH_KEY=${SSH_KEY}
 
 USER root
 
@@ -136,7 +138,7 @@ RUN mkdir -m 700 /root/.ssh \
 COPY .ssh/id_rsa.pub /root/.ssh
 
 RUN touch -m 600 /root/.ssh/id_rsa \
-	&& echo ${KEY} > /root/.ssh/id_rsa \
+	&& echo ${SSH_KEY} > /root/.ssh/id_rsa \
 	&& chmod 400 /root/.ssh/id_rsa 
 
 RUN cd /home/zowe \
@@ -145,7 +147,7 @@ RUN cd /home/zowe \
     && git submodule foreach "git checkout master"	\
 	&& cd zlux-build 
 	
-############
+############ 
 # BUILD
 ###########
 
