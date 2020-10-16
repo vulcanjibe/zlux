@@ -164,5 +164,5 @@ RUN cd /home/zowe \
 RUN cd /home/zowe/zlux/zlux-build \
     && ./build.sh 
 
-RUN cd home/zowe/zlux/zlux-app-server/bin \
-    && ./app-server.sh
+#RUN cd home/zowe/zlux/zlux-app-server/bin \
+#    && ./app-server.sh
