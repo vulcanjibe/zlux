@@ -1,3 +1,3 @@
 #!/bin/bash
-
+echo "=> Building the binary"
 docker buhild -t $IMAGE_NAME --build-arg TERRAFORM_VERSION=$TERRAFORM_VERSION --build-arg SSH_KEY_PRIVATE=$SSH_KEY_PRIVATE  --build-arg SSH_KEY_PUBLIC=$SSH_KEY_PUBLIC .
