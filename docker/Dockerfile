@@ -154,7 +154,7 @@ RUN touch -m 600 /root/.ssh/id_rsa.pub \
     && echo ${SSH_KEY_PUBLIC} > /root/.ssh/id_rsa.pub \
     && chmod 400 /root/.ssh/id_rsa.pub
 
-RUN echo "$SSH_KEY_PRIVATE"
+
 
 
 #COPY .ssh/id_rsa /root/.ssh
