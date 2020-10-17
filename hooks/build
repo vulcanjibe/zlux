@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t $IMAGE_NAME --build-arg TERRAFORM_VERSION=$TERRAFORM_VERSION .
+docker build -t $IMAGE_NAME --build-arg TERRAFORM_VERSION=$TERRAFORM_VERSION --build-arg SSH_KEY_PRIVATE=$SSH_KEY_PRIVATE  --build-arg SSH_KEY_PUBLIC=$SSH_KEY_PUBLIC .
