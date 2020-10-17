@@ -179,5 +179,8 @@ RUN rm /root/.ssh/id_rsa.pub \
 RUN cd /home/zowe/zlux/zlux-build \
     && ./build.sh 
 
-#RUN cd home/zowe/zlux/zlux-app-server/bin \
-#    && ./app-server.sh
+EXPOSE 8544
+RUN chmod a+x home/zowe/zlux/zlux-app-server/bin/app-server.sh
+
+ENTRYPOINT ["sh", "home/zowe/zlux/zlux-app-server/bin/app-server.sh"]
+
