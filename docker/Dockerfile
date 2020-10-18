@@ -4,9 +4,7 @@ FROM debian:buster-slim
 
 ARG SSH_KEY_PRIVATE
 ARG SSH_KEY_PUBLIC
-ENV SSH_KEY_PRIVATE $SSH_KEY_PRIVATE
-
-RUN echo $SSH_KEY_PRIVATE
+ENV SSH_PRIVATE $SSH_PRIVATE
 
 
 USER root
@@ -169,8 +167,8 @@ RUN cd /home/zowe \
 ################
 # Suppression des clés SSH
 ################
-RUN rm /root/.ssh/id_rsa.pub \
-    && rm /root/.ssh/id_rsa
+#RUN rm /root/.ssh/id_rsa.pub \
+#    && rm /root/.ssh/id_rsa
 
 ############
 # BUILD
