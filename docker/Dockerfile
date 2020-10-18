@@ -180,7 +180,7 @@ RUN cd /home/zowe/zlux/zlux-build \
     && ./build.sh 
 
 EXPOSE 8544
-RUN chmod a+x home/zowe/zlux/zlux-app-server/bin/app-server.sh
+RUN chmod a+x /home/zowe/zlux/zlux-app-server/bin/app-server.sh
 
-ENTRYPOINT ["sh", "home/zowe/zlux/zlux-app-server/bin/app-server.sh"]
+ENTRYPOINT ["sh", "cd /home/zowe/zlux/zlux-app-server/bin && ./app-server.sh"]
 
