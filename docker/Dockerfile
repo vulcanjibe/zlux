@@ -182,5 +182,6 @@ RUN cd /home/zowe/zlux/zlux-build \
 EXPOSE 8544
 RUN chmod a+x /home/zowe/zlux/zlux-app-server/bin/app-server.sh
 
-ENTRYPOINT ["sh", "cd /home/zowe/zlux/zlux-app-server/bin && ./app-server.sh"]
+WORKDIR "/home/zowe/zlux/zlux-app-server/bin"
+ENTRYPOINT "./app-server.sh"
 
