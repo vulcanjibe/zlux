@@ -183,5 +183,5 @@ EXPOSE 8544
 RUN chmod a+x /home/zowe/zlux/zlux-app-server/bin/app-server.sh
 
 WORKDIR "/home/zowe/zlux/zlux-app-server/bin"
-ENTRYPOINT "./app-server.sh"
+CMD "./app-server.sh"
 
