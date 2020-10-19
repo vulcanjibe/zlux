@@ -181,9 +181,9 @@ EXPOSE 8544
 RUN chmod a+x /home/zowe/zlux/zlux-app-server/bin/app-server.sh
 
 
-RUN rm -rf /home/zowe/zlux/zlux-app-server/node-modules \
-    && rm -rf /home/zowe/zlux/zlux-platform/node-modules \
-    && rm -rf /home/zowe/zlux/zlux-server-framework/node-modules 
+RUN rm -rf /home/zowe/zlux/zlux-app-server/node_modules \
+    && rm -rf /home/zowe/zlux/zlux-platform/node_modules \
+    && rm -rf /home/zowe/zlux/zlux-server-framework/node_modules 
 
 WORKDIR "/home/zowe/zlux/zlux-app-server/bin"
 CMD "./app-server.sh"
